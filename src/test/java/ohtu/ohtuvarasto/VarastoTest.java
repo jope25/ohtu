@@ -92,4 +92,32 @@ public class VarastoTest {
     public void negatiivisellaOtollaPalautuuNolla() {
         assertEquals(0, varasto.otaVarastosta(-1), vertailuTarkkuus);
     }
+    
+    @Test
+    public void otetaanEnemmänKuinSaldoaOn() {
+        varasto.lisaaVarastoon(5);
+        assertEquals(5, varasto.otaVarastosta(7), vertailuTarkkuus);
+        assertEquals(0, varasto.getSaldo(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void virheellisetAlkuSaldoJaTilavuusNollataan() {
+        Varasto v = new Varasto(-1, -1);
+        assertEquals(0, v.getSaldo(), vertailuTarkkuus);
+        assertEquals(0, v.getTilavuus(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void konstruktoriLuoVarastonOikein() {
+        Varasto v = new Varasto(10, 7);
+        assertEquals(7, v.getSaldo(), vertailuTarkkuus);
+        assertEquals(10, v.getTilavuus(), vertailuTarkkuus);
+    }
+    
+    @Test
+    public void konstruktoriHeittääYlimääränHukkaan() {
+        Varasto v = new Varasto(10, 11);
+        assertEquals(10, v.getSaldo(), vertailuTarkkuus);
+        assertEquals(10, v.getTilavuus(), vertailuTarkkuus);
+    }
 }
