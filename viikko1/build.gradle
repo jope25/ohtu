@@ -37,3 +37,4 @@ jar {
 }
 
 apply plugin: "jacoco"
+apply plugin: 'checkstyle'
