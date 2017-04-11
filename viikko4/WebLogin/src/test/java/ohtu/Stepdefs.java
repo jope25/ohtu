@@ -24,8 +24,21 @@ public class Stepdefs {
     @Given("^new user is selected$")
     public void new_user_selected() throws Throwable {
         driver.get(baseUrl);
-        WebElement element = driver.findElement(By.linkText("register new user"));       
-        element.click();          
+        driver.findElement(By.linkText("register new user")).click();          
+    }
+    
+    @Given("^user with username \"([^\"]*)\" with password \"([^\"]*)\" is successfully created$")
+    public void successful_user_creation(String username, String password) throws Throwable {
+        createUser(username, password);
+        pageHasContent("Welcome to Ohtu Application!");
+        pageHasContent("info for newbie");
+        pageHasContent("continue to application mainpage");
+    }
+    
+    @Given("^user with username \"([^\"]*)\" and password \"([^\"]*)\" is unsuccessfully created$")
+    public void unsuccessful_user_creation(String username, String password) throws Throwable {
+        createUser(username, password);
+        pageHasContent("Create username and give password");
     }
     
     @When("^correct username \"([^\"]*)\" and password \"([^\"]*)\" are given$")
@@ -125,4 +138,10 @@ public class Stepdefs {
         driver.findElement(By.name("passwordConfirmation")).sendKeys(passwordConfirmation);
         driver.findElement(By.name("signup")).submit();  
     } 
+    
+    private void createUser(String username, String password) {
+        driver.get(baseUrl);
+        driver.findElement(By.linkText("register new user")).click();  
+        signupWith(username, password, password);
+    }
 }
