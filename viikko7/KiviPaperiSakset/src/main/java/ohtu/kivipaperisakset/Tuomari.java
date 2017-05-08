@@ -13,41 +13,38 @@ public class Tuomari {
         this.tasapelit = 0;
     }
 
-    public void kirjaaSiirto(String ekanSiirto, String tokanSiirto) {
+    public void tuomarinToimet(String ekanSiirto, String tokanSiirto) {
+        kirjaaSiirto(ekanSiirto, tokanSiirto);
+        System.out.println(tilanne());
+    }
+    
+    public String tilanne() {
+        return "Pelitilanne: " + ekanPisteet + " - " + tokanPisteet + "\n"
+                + "Tasapelit: " + tasapelit;
+    }
+    
+    private void kirjaaSiirto(String ekanSiirto, String tokanSiirto) {
         if (tasapeli(ekanSiirto, tokanSiirto)) {
             tasapelit++;
-        } else if (ekaVoittaa(ekanSiirto, tokanSiirto)) {
-            ekanPisteet++;
         } else {
-            tokanPisteet++;
+            voittajallePiste(ekanSiirto, tokanSiirto);
         }
     }
 
     // sisäinen metodi, jolla tarkastetaan tuliko tasapeli
-    private static boolean tasapeli(String eka, String toka) {
-        if (eka.equals(toka)) {
-            return true;
-        }
-
-        return false;
+    private boolean tasapeli(String ekanSiirto, String tokanSiirto) {
+        return ekanSiirto.equals(tokanSiirto);
     }
 
-    // sisäinen metodi joka tarkastaa voittaako eka pelaaja tokan
-    private static boolean ekaVoittaa(String eka, String toka) {
-        if ("k".equals(eka) && "s".equals(toka)) {
-            return true;
-        } else if ("s".equals(eka) && "p".equals(toka)) {
-            return true;
-        } else if ("p".equals(eka) && "k".equals(toka)) {
-            return true;
+    private void voittajallePiste(String ekanSiirto, String tokanSiirto) {
+        if (ekanSiirto.equals("k") && tokanSiirto.equals("s")) {
+            ekanPisteet++;
+        } else if (ekanSiirto.equals("s") && tokanSiirto.equals("p")) {
+            ekanPisteet++;
+        } else if (ekanSiirto.equals("p") && tokanSiirto.equals("k")) {
+            ekanPisteet++;
+        } else {
+            tokanPisteet++;
         }
-
-        return false;
-    }
-
-    public String toString() {
-        String s = "Pelitilanne: " + ekanPisteet + " - " + tokanPisteet + "\n"
-                + "Tasapelit: " + tasapelit;
-        return s;
     }
 }
